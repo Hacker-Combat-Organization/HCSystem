@@ -1,0 +1,49 @@
+#!/usr/bin/ruby
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# All Vagrant configuration is done below. The "2" in Vagrant.configure
+# configures the configuration version (we support older styles for
+# backwards compatibility). Please don't change it unless you know what
+# you're doing.
+
+
+# require 'getoptlong'
+# opts = GetoptLong.new(
+#         [ '--port', GetoptLong::OPTIONAL_ARGUMENT ]
+# )
+#
+# puts opts.get()
+# portarg = 3010
+
+
+
+
+Vagrant.configure("2") do |config|
+  # The most common configuration options are documented and commented below.
+  # For a complete reference, please see the online documentation at
+  # https://docs.vagrantup.com.
+
+  # Every Vagrant development environment requires a box. You can search for
+  # boxes at https://atlas.hashicorp.com/search.
+  #config.vm.box = "precise64"
+  puts "Vagrantfile Unit 3"
+  puts ENV["PORTENV3"]
+
+  config.vm.box = "cbumgard/nodejs"
+  config.vm.provider :virtualbox do |vb|
+        vb.name = "unit_3"
+  end
+
+  config.vm.provision "shell", inline: "touch /$1", args: 11004
+
+  config.vm.network :forwarded_port, guest: 22, host: 2224, host_ip: "0.0.0.0", id: "ssh", auto_correct: true
+  config.ssh.forward_agent = true
+  config.vm.network :forwarded_port, guest: 11004, host: 11004, auto_correct: true
+  #config.vm.provision :shell, path: "./testing.sh", run: 'always'
+
+  # config.vm.provision "up", type: "shell", run: "always", inline: "bash /vagrant/testing.sh &"
+  #config.vm.provision "shell", path: "script/run-test.sh", privileged: false, run: 'always', args: "#{selenium_version}"
+  #config.vm.provision :shell, :inline => "./testing.sh &", run: 'always'
+
+end

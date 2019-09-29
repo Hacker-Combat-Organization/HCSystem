@@ -1,0 +1,315 @@
+<!--
+Copyright 2014-Present Hacker Combat Authors
+This file is part of the Hacker Combat library.
+The Hacker Combat Protocol is free software: you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+The Hacker Combat Protocol is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU Lesser General Public License for more details.
+You should have received a copy of the GNU Lesser General Public License
+along with the Hacker Combat Protocol library. If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+    <title>Hacker Combat Game Server</title>
+    <!-- Bootstrap core CSS -->
+    <link href="http://v4-alpha.getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="http://v4-alpha.getbootstrap.com/examples/dashboard/dashboard.css" rel="stylesheet">
+    <style>
+    * { font-family:tahoma; font-size:12px;  margin:0px; }
+    p { line-height:18px; }
+    div { width:100%; /*margin-left:auto; margin-right:auto;*/}
+    #content{ padding:5px; background:#ddd; border-radius:0px !important; overflow-y: scroll;
+               border:0px 0px 0px 0px solid #CCC !important; margin-top:0px; height: 40vh;
+               padding-left: 20px !important;  }
+    .contentCopy {background:#ddd; border-radius:0px !important; overflow-y: scroll;
+              border:0px solid #CCC !important; margin-top:0px ; padding-left: 10px !important; margin-bottom:50px;}
+    #input { border-radius:0px !important; border:0px solid #ccc !important;
+             margin-top:10px; padding:10px; width:400px; background-color: #ddd;  }
+    #status { width:88px; display:block; float:left; margin-top:15px; padding-left:10px; }
+    input:focus {
+        background-color: #ddd !important; border-color: 0px #ddd !important; outline:0 !important;
+    }
+    canvas {
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+    }
+    #content,.contentCopy,#input{
+      display:none
+    }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.js"></script>
+    <script>
+      window.chartColors = {
+      	red: 'rgb(255, 99, 132)',
+      	orange: 'rgb(255, 159, 64)',
+      	yellow: 'rgb(255, 205, 86)',
+      	green: 'rgb(75, 192, 192)',
+      	blue: 'rgb(54, 162, 235)',
+      	purple: 'rgb(153, 102, 255)',
+      	grey: 'rgb(231,233,237)'
+      };
+      window.randomScalingFactor = function() {
+      	return (Math.random() > 0.5 ? 1.0 : -1.0) * Math.round(Math.random() * 100);
+      }
+      </script>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li class="active">
+              <div class="row placeholders">
+                <div class="col-xs-6 col-sm-6 placeholder">
+                  <input value="jovi" id="p1_name" />
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="row placeholders">
+                <div class="col-xs-6 col-sm-6 placeholder">
+                  <input value="mark" id="p2_name" />
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main">
+          <div class="row placeholders" style="display:none">
+            <div class="col-xs-6 col-sm-6 placeholder">
+              <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-fluid" alt="Generic placeholder thumbnail">
+              <h4>Player One</h4>
+              <span class="text-muted">Something else</span>
+            </div>
+            <div class="col-xs-6 col-sm-6 placeholder">
+              <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-fluid" alt="Generic placeholder thumbnail">
+              <h4>Player Two</h4>
+              <span class="text-muted">Something else</span>
+            </div>
+          </div>
+          </br></br></br>
+          <div class="row placeholders">
+            <div class="col-xs-6 col-sm-6 placeholder">
+              <div>
+                <canvas id="myChart" style="height:10px !important;"></canvas>
+              </div>
+            </div>
+            <div class="col-xs-6 col-sm-6 placeholder">
+              <div>
+                <canvas id="myChart2" style="height:10px !important;"></canvas>
+              </div>
+            </div>
+          </div>
+          <script>
+          var ctx = document.getElementById("myChart").getContext('2d');
+          var dataHolder = [12,19,21]
+          window.myChart = new Chart(ctx, {
+            type: 'polarArea',
+            data: {
+              labels: ["Commands Per Minute", "Error Per Minute", "Characters Per Minute"],
+              datasets: [{
+                backgroundColor: [
+                  "green",
+                  "red",
+                  "blue"
+                ],
+                data: dataHolder
+              }]
+            }
+          });
+          setInterval((function(){
+              var zero = Math.random() < 0.2 ? true : false;
+              window.myChart.update();
+          }) , 1000)
+          var ctx = document.getElementById("myChart2").getContext('2d');
+          var dataHolder = [12,19,15]
+          window.myChart2 = new Chart(ctx, {
+            type: 'polarArea',
+            data: {
+              labels: ["Commands Per Minute", "Error Per Minute", "Characters Per Minute"],
+              datasets: [{
+                backgroundColor: [
+                  "green",
+                  "red",
+                  "blue"
+                ],
+                data: dataHolder
+              }]
+            }
+          });
+          setInterval((function(){
+              var zero = Math.random() < 0.2 ? true : false;
+              window.myChart2.update();
+          }) , 1000)
+          </script>
+        </br></br>
+          <h1>Unit Health</h1>
+          <div id="container" style="width: 100%; margin-bottom: 50px;">
+              <canvas id="canvas" style="width:100%"></canvas>
+          </div>
+          <button id="randomizeData">Reset</button>
+          <script>
+              var MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+              var color = Chart.helpers.color;
+              var barChartData = {
+                  labels: ["Player 1", "Player 2"],
+                  datasets: [{
+                      label: 'Container 1',
+                      backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
+                      borderColor: window.chartColors.red,
+                      borderWidth: 1,
+                      data: [
+                          randomScalingFactor(),
+                          69,
+                      ]
+                  }, {
+                      label: 'Container 2',
+                      backgroundColor: color(window.chartColors.blue).alpha(0.5).rgbString(),
+                      borderColor: window.chartColors.blue,
+                      borderWidth: 1,
+                      data: [
+                          randomScalingFactor(),
+                          45,
+                      ]
+                  },{
+                      label: 'Container 3',
+                      backgroundColor: color(window.chartColors.green).alpha(0.5).rgbString(),
+                      borderColor: window.chartColors.red,
+                      borderWidth: 1,
+                      data: [
+                          randomScalingFactor(),
+                          10,
+                      ]
+                  }]
+              };
+              window.onload = function() {
+                  var ctx = document.getElementById("canvas").getContext("2d");
+                  window.myBar = new Chart(ctx, {
+                      type: 'bar',
+                      data: barChartData,
+                      options: {
+                          responsive: true,
+                          legend: {
+                              position: 'top',
+                          },
+                          title: {
+                              display: true,
+                              text: 'Live Player Units'
+                          },
+                          scales: {
+                              yAxes: [{
+                                  ticks: {
+                                      max: 100,
+                                      min: 0,
+                                      stepSize: 5
+                                  }
+                              }]
+                          },
+                      }
+                  });
+                  setInterval((function(){
+                    //
+                  }),1000)
+              };
+              document.getElementById('randomizeData').addEventListener('click', function() {
+                  var zero = Math.random() < 0.2 ? true : false;
+                  barChartData.datasets.forEach(function(dataset) {
+                      dataset.data = dataset.data.map(function() {
+                          return zero ? 0.0 : randomScalingFactor();
+                      });
+                  });
+                  window.myBar.update();
+              });
+              var colorNames = Object.keys(window.chartColors);
+          </script>
+          </br></br></br></br>
+          <h2 style="display:none">Player Stats</h2>
+          <div class="row placeholders" style="display:none">
+            <div class="col-xs-6 col-sm-6 placeholder">
+              <div class="table-responsive">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>Round</th>
+                      <th>One</th>
+                      <th>Two</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>1,001</td>
+                      <td>Lorem</td>
+                      <td>ipsum</td>
+                    </tr>
+                    <tr>
+                      <td>1,002</td>
+                      <td>amet</td>
+                      <td>consectetur</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="col-xs-6 col-sm-6 placeholder">
+              <div class="table-responsive">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>Round</th>
+                      <th>One</th>
+                      <th>Two</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>1,001</td>
+                      <td>Lorem</td>
+                      <td>ipsum</td>
+                    </tr>
+                    <tr>
+                      <td>1,002</td>
+                      <td>amet</td>
+                      <td>consectetur</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div id="content"></div>
+          <div class="contentCopy">
+              <span id="status">Connecting...</span>
+              <input type="text" id="input" disabled="disabled" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js" integrity="sha384-THPy051/pYDQGanwU6poAc/hOdQxjnOEXzbT+OuUAFqNqFjL+4IGLBgCJC3ZOShY" crossorigin="anonymous"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.2.0/js/tether.min.js" integrity="sha384-Plbmg8JY28KFelvJVai01l8WyZzrYWG825m+cZ0eDDS1f7d/js6ikvy1+X+guPIB" crossorigin="anonymous"></script>
+    <script src="http://v4-alpha.getbootstrap.com/dist/js/bootstrap.min.js"></script>
+    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+    <script src="http://v4-alpha.getbootstrap.com/assets/js/vendor/holder.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="http://v4-alpha.getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
+    <script src="./frontend.js"></script>
+  </body>
+</html>

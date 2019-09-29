@@ -1,0 +1,46 @@
+<!--
+Copyright 2014-Present Hacker Combat Authors
+This file is part of the Hacker Combat library.
+The Hacker Combat Protocol is free software: you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+The Hacker Combat Protocol is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU Lesser General Public License for more details.
+You should have received a copy of the GNU Lesser General Public License
+along with the Hacker Combat Protocol library. If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>WebSockets - Simple messages</title>
+        <style>
+        * { font-family:tahoma; font-size:12px;  margin:0px; }
+        p { line-height:18px; }
+        div { width:100vw; /*margin-left:auto; margin-right:auto;*/}
+        #content{ padding:5px; background:#ddd; border-radius:0px !important; overflow-y: scroll;
+                   border:0px 0px 0px 0px solid #CCC !important; margin-top:0px; height: 40vh;
+                   padding-left: 20px !important;}
+        .contentCopy {background:#ddd; border-radius:0px !important; overflow-y: scroll;
+                  border:0px solid #CCC !important; margin-top:0px ; padding-left: 10px !important;}
+        #input { border-radius:0px !important; border:0px solid #ccc !important;
+                 margin-top:10px; padding:10px; width:400px; background-color: #ddd;  }
+        #status { width:88px; display:block; float:left; margin-top:15px; padding-left:10px; }
+        input:focus {
+            background-color: #ddd !important; border-color: 0px #ddd !important; outline:0 !important;
+        }
+        </style>
+    </head>
+    <body>
+        <div id="content"></div>
+        <div class="contentCopy">
+            <span id="status">Connecting...</span>
+            <input type="text" id="input" disabled="disabled" />
+        </div>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src="./frontend.js"></script>
+    </body>
+</html>

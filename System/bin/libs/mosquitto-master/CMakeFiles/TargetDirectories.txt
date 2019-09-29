@@ -1,0 +1,6 @@
+/Users/fs8b/Documents/Projects/IoT/src/cpp/mosquitto-master/client/CMakeFiles/mosquitto_sub.dir
+/Users/fs8b/Documents/Projects/IoT/src/cpp/mosquitto-master/src/CMakeFiles/mosquitto.dir
+/Users/fs8b/Documents/Projects/IoT/src/cpp/mosquitto-master/src/CMakeFiles/mosquitto_passwd.dir
+/Users/fs8b/Documents/Projects/IoT/src/cpp/mosquitto-master/lib/CMakeFiles/libmosquitto.dir
+/Users/fs8b/Documents/Projects/IoT/src/cpp/mosquitto-master/client/CMakeFiles/mosquitto_pub.dir
+/Users/fs8b/Documents/Projects/IoT/src/cpp/mosquitto-master/lib/cpp/CMakeFiles/mosquittopp.dir
